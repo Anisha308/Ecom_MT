@@ -1,10 +1,12 @@
 import React from 'react'
 
-export default function App() {
+function App() {
   return (
     <div>
-      Hii
+      hh
     </div>
   )
 }
+
+export default App
 
