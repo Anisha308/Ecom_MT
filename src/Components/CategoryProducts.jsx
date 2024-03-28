@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from 'react'
-import '../../src/App.css'
-import apiInstance from '../../Api'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
+import apiInstance from '../../Api';
+import { Link } from 'react-router-dom'; 
 
-export default function ProductList() {
-const [products,setProducts]=useState([])
-   useEffect(() => {
-     const fetchProducts = () => {
-       apiInstance
-         .get("https://api.escuelajs.co/api/v1/products")
-         .then((response) => {
-           console.log(response.data); 
-           setProducts(response.data); 
-         })
-         .catch((error) => {
-           console.error("Error fetching products:", error);
-         });
-     };
+function CategoryProducts() {
+     const [category, setCategory] = useState([]);
+     const { id } = useParams();
+useEffect(() => {
+  const fetchCategory = async () => {
+    try {
+      const response = await apiInstance.get(
+        `https://api.escuelajs.co/api/v1/categories/${id}/products`
+      );
+      console.log(response.data);
+      setCategory(response.data);
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    }
+  };
 
-     fetchProducts();
-   },[]);
+  fetchCategory();
+}, [id]);
 
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="container px-6 py-8 mx-auto">
         <div className="lg:flex lg:-mx-2">
-         
+          
 
           <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5 ">
             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-              <p className="text-gray-500 dark:text-gray-300">All Products</p>
-              
+              <p className="text-gray-500 dark:text-gray-300">6 Items</p>
+             All Products
             </div>
             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {products.map((product) => (
+              {category.map((product) => (
                 <div
                   key={product.id}
                   className="flex flex-col items-center justify-center w-full max-w-lg mx-auto"
@@ -70,3 +72,5 @@ const [products,setProducts]=useState([])
     </section>
   );
 }
+
+export default CategoryProducts

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import apiInstance from '../../Api';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 function CategoryList() {
 const [category,setCategory]=useState([])
 useEffect(() => {
@@ -20,7 +21,6 @@ useEffect(() => {
 }, []);
   return (
     <>
-      {/* component */}
       <div className="bg-white p-8 rounded-md w-full">
         <div className=" flex items-center justify-between pb-6">
           <div>
@@ -39,6 +39,8 @@ useEffect(() => {
 
                                       <tr key={index}>
                                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                      <Link to={`/categories/${category.id}/products`}>
+
                                               <div className="flex items-center">
                                                   <div className="flex-shrink-0 w-10 h-10">
                                                       <img
@@ -52,7 +54,7 @@ useEffect(() => {
 {category.name}                                                      </p>
                                                   </div>
                                               </div>
-               
+               </Link>
                                           </td>
                                       </tr>
                                   ))}
